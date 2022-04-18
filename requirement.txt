@@ -1,0 +1,13 @@
+uvicorn==0.13.4
+python-dotenv==0.20.0
+pydantic==1.9.0
+fastapi==0.75.1
+tortoise==0.1.1
+tortoise-orm==0.17.0
+casbin-tortoise-adapter==1.0.1
+loguru==0.6.0
+passlib==1.7.4
+python-jose==3.3.0
+python-multipart==0.0.5
+asyncpg==0.25.0
+bcrypt==3.2.0

@@ -1,0 +1,2 @@
+IS_DELETE = 1
+NOT_DELETE = 0
