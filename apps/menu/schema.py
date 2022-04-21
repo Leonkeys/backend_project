@@ -33,6 +33,12 @@ class MenuList(MenuBase):
     children: List = Field(default=None, description="权限子树")
 
 
+class CurrentMenu(MenuBase):
+    id: int = Field(..., description="权限id")
+    children: List = Field(default=None, description="权限子树")
+    show: bool = Field(default=False, description="是否拥有权限")
+
+
 class SetMenu(MenuBase):
     id: int = Field(..., description="权限id")
 

@@ -1,11 +1,9 @@
 import traceback
-
 from fastapi import FastAPI, Request, Depends
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.exceptions import RequestValidationError, ValidationError
 from tortoise.contrib.fastapi import register_tortoise
-
 from .router import api_router
 from .middleware import register_hook
 from utils import custom_exc

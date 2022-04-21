@@ -1,7 +1,7 @@
 import casbin
 import casbin_tortoise_adapter
 from fastapi import Request
-from typing import Any
+from typing import Any, List
 
 from core import settings
 from utils.custom_exc import AuthenticationError
@@ -10,7 +10,7 @@ from utils.utils import Singleton
 
 class TortoiseCasbin(metaclass=Singleton):
     def __init__(self, model: str) -> None:
-        print('*'*20, '初始化 casbin')
+        print('*' * 20, '初始化 casbin')
         adapter = casbin_tortoise_adapter.TortoiseAdapter()
         self.enforce = casbin.Enforcer(str(model), adapter)
 
@@ -31,6 +31,9 @@ class TortoiseCasbin(metaclass=Singleton):
 
     def __getattr__(self, attr: str) -> Any:
         return getattr(self.enforce, attr)
+
+    async def add_permissions_for_role(self, roles: List):
+        return await self.enforce.add_policies(roles)
 
 
 class Authority:

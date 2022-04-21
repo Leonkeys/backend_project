@@ -60,31 +60,31 @@ async def del_role(request: Request, role_name: str):
     return ResultResponse[str](message='角色已删除')
 
 
-@router.post("/add/perm",
+@router.post("/setPermission",
              summary="添加角色权限",
              description="添加角色权限",
              response_model=ResultResponse[str],
              dependencies=[Depends(Authority('auth,add'))])
-async def add_role_perm(perm_info: schema.RolePerm):
-    role = await get_role_by_name(perm_info.role)
+async def set_permission_by_role(perm_info: List[schema.RolePerm]):
+    role = await get_role_by_name(perm_info[0].role)
     if not role:
         return ResultResponse[str](code=HttpStatus.HTTP_422_ROLE_NOT_EXIST,
                                    message='角色不存在')
     e = await get_casbin()
-    res = await e.add_permission_for_role(perm_info.role, perm_info.model, perm_info.act)
-    if res:
-        return ResultResponse[str](message='添加角色权限成功')
-    else:
-        return ResultResponse[str](message='添加角色权限失败，权限已存在')
+    for perm in perm_info:
+        res = await e.add_permission_for_role(perm.role, perm.model, perm.act)
+        # if res:
+        #     return ResultResponse[str](message='添加角色权限成功')
+        # else:
+        #     return ResultResponse[str](message='添加角色权限失败，权限已存在')
 
-
-@router.delete('/del/perm',
-               summary='删除角色权限',
-               description='删除角色权限',
-               dependencies=[Depends(Authority('auth,del'))])
-async def del_role_perm(perm_info: schema.RolePerm):
-    e = await get_casbin()
-    res = await e.remove_permission_for_role(perm_info.role, perm_info.model, perm_info.act)
-    if res:
-        return ResultResponse[str](message='删除角色权限成功')
-    return ResultResponse[str](message='角色权限不存在')
+# @router.delete('/del/perm',
+#                summary='删除角色权限',
+#                description='删除角色权限',
+#                dependencies=[Depends(Authority('auth,del'))])
+# async def del_role_perm(perm_info: schema.RolePerm):
+#     e = await get_casbin()
+#     res = await e.remove_permission_for_role(perm_info.role, perm_info.model, perm_info.act)
+#     if res:
+#         return ResultResponse[str](message='删除角色权限成功')
+#     return ResultResponse[str](message='角色权限不存在')

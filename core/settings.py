@@ -19,8 +19,8 @@ class APISettings(BaseSettings):
     # redoc 文档
     REDOC_URL: Optional[str] = "/openapi/redoc"
 
-    # token过期时间 分钟
-    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24 * 8
+    # token过期时间秒
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 60 * 24
 
     # 生成token的加密算法
     ALGORITHM: str = "HS256"
@@ -37,6 +37,14 @@ class APISettings(BaseSettings):
     # 数据库连接配置
     # postgres://postgres:qwerty123@localhost:5432/events
     DATABASE_URI = "postgres://runjian:!QAZ2wsx@pgm-2ze119et1z056vhpho.pg.rds.aliyuncs.com:1921/fastapi-pg-tortoise-casbin"
+
+    REDIS_CONFIG: Dict = {
+        "host": "r-2zeotg3j0dz2iojwg0pd.redis.rds.aliyuncs.com",
+        "port": 6379,
+        "username": "runjian",
+        "password": "!QAZ2wsx",
+        "decode_responses": True
+    }
 
     # 数据库配置
     DATABASE_CONFIG: Dict = {
@@ -61,7 +69,8 @@ class APISettings(BaseSettings):
         "openapi": "in",  # 开发 API
         "/auth/login": "in",  # 登录
         "/auth/register": "in",  # 注册
-        "/ws/": "in"  # ws 服务不需要登录
+        "/ws/": "in",  # ws 服务不需要登录
+        "/auth/sso": "in"
     }
 
 

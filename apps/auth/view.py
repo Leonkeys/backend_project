@@ -1,17 +1,16 @@
 # -*- coding: utf-8 -*-
 from auth.auth_casbin import get_casbin
-from datetime import timedelta
 from fastapi import APIRouter, Depends, status, HTTPException
 from fastapi.security.oauth2 import OAuth2PasswordRequestForm
 from . import schema
 from apps.user import crud as user_crud
 from apps.user import model as user_model
 from apps.user import schema as user_schema
-from core import settings
+from core import settings, TOKEN_CLIENT
 from utils.response_code import ResultResponse
 from utils import logger
 from utils.utils import verify_password
-from auth.auth import create_access_token
+from auth.auth import create_access_token, generate_token
 
 router = APIRouter()
 
@@ -44,10 +43,11 @@ async def login(form_data: OAuth2PasswordRequestForm = Depends()):
                             detail='username or password error')
 
     # 登录成功后返回token
-    access_token_expires = timedelta(
-        minutes=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
+    identifier: str = await generate_token()
+    TOKEN_CLIENT.set(user.username, identifier, ex=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
     access_token = create_access_token(subject=user.username,
-                                       expires_delta=access_token_expires)
+                                       identifier=identifier,
+                                       expires_delta=settings.ACCESS_TOKEN_EXPIRE_MINUTES)
 
     return {'access_token': access_token, 'token_type': 'bearer'}
 

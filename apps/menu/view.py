@@ -13,16 +13,18 @@ router = APIRouter()
             response_model=ResultResponse[List[schema.MenuTree]])
 async def menu_tree(request: Request):
     current_user = request.state.user.username
-    menu_tree: List[model.TblMenu] = await service.get_menu_tree(current_user)
+    menu_tree: List[schema.MenuTree] = await service.get_all_menu_tree(current_user)
     return ResultResponse[List[schema.MenuTree]](result=menu_tree)
 
 
-@router.post('/menuByUser',
-             summary="获取指定用户所拥有的权限树",
-             name="获取指定用户所拥有的权限树",
-             response_model=ResultResponse[str])
-async def menu_tree_by_user(request: Request, user_id: int):
-    pass
+@router.post("/currentMenuTree",
+             summary="获取指定角色权限菜单列表",
+             description="获取指定角色权限菜单列表",
+             response_model=ResultResponse[List[schema.CurrentMenu]])
+async def get_permissions_by_user(request: Request, role_name: str):
+    current_user = request.state.user.username
+    menu_tree: List[model.TblMenu] = await service.get_menu_tree_by_role(current_user, role_name)
+    return ResultResponse[List[schema.CurrentMenu]](result=menu_tree)
 
 
 @router.post("/createMenu",
