@@ -26,7 +26,7 @@ class APISettings(BaseSettings):
     ALGORITHM: str = "HS256"
 
     # 生产环境保管好 SECRET_KEY
-    SECRET_KEY: str = 'aeq)s(*&(&)()WEQasd8**&^9asda_asdasd*&*&^+_sda11'
+    SECRET_KEY: str = 'a'
 
     # 项目根路径
     BASE_PATH: Path = Path(__file__).resolve().parent.parent
@@ -36,13 +36,13 @@ class APISettings(BaseSettings):
 
     # 数据库连接配置
     # postgres://postgres:qwerty123@localhost:5432/events
-    DATABASE_URI = "postgres://runjian:!QAZ2wsx@pgm-2ze119et1z056vhpho.pg.rds.aliyuncs.com:1921/fastapi-pg-tortoise-casbin"
+    DATABASE_URI = ""
 
     REDIS_CONFIG: Dict = {
-        "host": "r-2zeotg3j0dz2iojwg0pd.redis.rds.aliyuncs.com",
+        "host": "",
         "port": 6379,
-        "username": "runjian",
-        "password": "!QAZ2wsx",
+        "username": "",
+        "password": "",
         "decode_responses": True
     }
 
