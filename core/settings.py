@@ -36,10 +36,10 @@ class APISettings(BaseSettings):
 
     # 数据库连接配置
     # postgres://postgres:qwerty123@localhost:5432/events
-    DATABASE_URI = ""
+    # DATABASE_URI = ""
 
     REDIS_CONFIG: Dict = {
-        "host": "",
+        "host": "localhost",
         "port": 6379,
         "username": "",
         "password": "",
@@ -49,7 +49,16 @@ class APISettings(BaseSettings):
     # 数据库配置
     DATABASE_CONFIG: Dict = {
         'connections': {
-            'default': DATABASE_URI
+            "default": {
+                "engine": "tortoise.backends.mysql",
+                "credentials": {
+                    "host": "localhost",
+                    "port": 33060,
+                    "user": "root",
+                    "password": "123456",
+                    "database": "backend_project"
+                }
+            }
         },
         'apps': {
             'models': {
