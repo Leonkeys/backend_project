@@ -10,8 +10,8 @@ class APISettings(BaseSettings):
     DEBUG: bool = False
 
     # 项目文档
-    TITLE: str = "测试项目"
-    DESCRIPTION: str = "大型项目框架"
+    TITLE: str = "leon"
+    DESCRIPTION: str = "model"
     # 文档地址 默认为docs
     DOCS_URL: str = "/openapi/docs"
     # 文档关联请求数据接口

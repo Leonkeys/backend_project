@@ -11,12 +11,12 @@ class TblDaySpending(TimestampMixin, AbstractBaseModel):
     title = fields.CharField(max_length=64, null=False, description="标题")
     spending = fields.FloatField(null=False, description="单笔消费金额")
     describe = fields.CharField(max_length=512, null=True, description="详情")
-    spending_year = fields.CharField(max_length=16, null=False, description="消费年份")
-    spending_month = fields.CharField(max_length=16, null=False, description="消费月份")
-    spending_day = fields.CharField(max_length=16, null=False, description="消费日")
+    spend_year = fields.CharField(max_length=16, null=False, description="消费年份")
+    spend_month = fields.CharField(max_length=32, null=False, description="消费月份")
+    spend_day = fields.CharField(max_length=64, null=False, description="消费日")
 
     class Meta:
-        table = 'tbl_day_spending'
+        table = 'tbl_day_spend'
         table_description = '日消费记录表'
         ordering = ["-created_at", "id"]
 
@@ -28,7 +28,7 @@ DaySpendingBase = pydantic_model_creator(TblDaySpending, name='DaySpendingBase')
 DaySpendingOut = pydantic_model_creator(TblDaySpending, name='DaySpendingOut')
 
 
-class TblMonthFixedSpending(TimestampMixin, AbstractBaseModel):
+class TblMonthFixedSpend(TimestampMixin, AbstractBaseModel):
     title = fields.CharField(max_length=128, null=False, description="开支标题")
     spend = fields.FloatField(null=False, description="金额")
     describe = fields.CharField(max_length=512, null=True, description="详情")
@@ -43,7 +43,11 @@ class TblMonthFixedSpending(TimestampMixin, AbstractBaseModel):
         exclude = ["created_at", "modified_at", "id", "is_delete"]
 
 
-class TblYearFixedSpending(TimestampMixin, AbstractBaseModel):
+MonthFixedSpendBase = pydantic_model_creator(TblMonthFixedSpend, name='MonthFixedSpendBase')
+MonthFixedSpendOut = pydantic_model_creator(TblMonthFixedSpend, name='MonthFixedSpendOut')
+
+
+class TblYearFixedSpend(TimestampMixin, AbstractBaseModel):
     title = fields.CharField(max_length=128, null=False, description="开支标题")
     spend = fields.FloatField(null=False, description="金额")
     describe = fields.CharField(max_length=512, null=True, description="详情")
@@ -56,3 +60,7 @@ class TblYearFixedSpending(TimestampMixin, AbstractBaseModel):
 
     class PydanticMeta:
         exclude = ["created_at", "modified_at", "id", "is_delete"]
+
+
+YearFixedSpendBase = pydantic_model_creator(TblYearFixedSpend, name='YearFixedSpendBase')
+YearFixedSpendOut = pydantic_model_creator(TblYearFixedSpend, name='YearFixedSpendOut')
